@@ -4,6 +4,8 @@
 
 ### Added
 
+- Main screen
+  - Strategic Map view added to the main screen, matching the 50U rectangular radar style used by Relay / Strategic Map stations #2575
 - New scenarios
   - _Broken Glass_ #1795, #1796, #1798
 - New translations
@@ -15,6 +17,8 @@
 ### Changed
 
 - Added and edited scripting docs for SpaceShips #1820
+- Hotkey configuration labels now cover Main Screen Strategic Map and debug collider visibility, so those actions appear properly in the hotkey UI #2844
+- Mouse wheel scrolling now uses per-widget scroll speed calculations instead of the older shared fractional step behavior #2846
 - Mission time clock now uses `hh:mm:ss`-formatted time #1773
 - Stats on Operations screen resized to match other screens #1774
 - Build changes
@@ -27,6 +31,10 @@
 ### Fixed
 
 - ShipTemplate:setHull() and ShipTemplateBasedObject:setHull() respect limits #1811
+- Control visibility updates correctly when ship components are removed during runtime, including Single Pilot, Tactical, Weapons, Relay, and Science screen elements #2832
+- Main screen / ship systems crash guards improved for missing impulse engines, missing gravity targets, and ships with crew but no rooms #2814, #2831
+- Long-range radar continues to show mines correctly after missile visibility fixes #2826
+- Single Pilot engine controls repositioned to leave room for docking and overheat indicators #2823
 - ShipTemplate:copy() respects tube count limit for tubes, instead of beam count limit #1810
 - URL for EmptyEpsilon website in scripting reference fixed #1791
 - Relay can once again select alert level buttons #1786
