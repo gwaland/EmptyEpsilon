@@ -4,6 +4,8 @@
 #include <io/network/udpSocket.h>
 #include "hardware/hardwareOutputDevice.h"
 
+#include <atomic>
+#include <mutex>
 #include <stdint.h>
 #include <thread>
 
@@ -16,9 +18,11 @@ private:
     std::thread update_thread;
     sp::io::network::UdpSocket socket;
 
-    bool run_thread;
+    std::atomic<bool> run_thread;
+    std::mutex data_mutex;
     int channel_count;
     uint8_t channel_data[512];
+    uint8_t sequence_number;
 
     int resend_delay;
     bool multicast;
@@ -40,11 +44,14 @@ public:
     //Set a hardware channel output. Value is 0.0 to 1.0 for no to max output.
     virtual void setChannelData(int channel, float value) override;
 
+    virtual void flush() override;
+
     //Return the number of output channels supported by this device.
     virtual int getChannelCount() override;
 
 private:
     void updateLoop();
+    void sendCurrentFrame();
 };
 
 #endif//S_ACN_DMX_DEVICE_H

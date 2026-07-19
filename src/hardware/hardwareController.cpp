@@ -29,9 +29,6 @@
 
 #include "hardwareMappingEffects.h"
 
-#include <chrono>
-#include <thread>
-
 HardwareController::~HardwareController()
 {
     for(HardwareOutputDevice* device : devices)
@@ -275,7 +272,8 @@ void HardwareController::shutdown()
 {
     shutting_down = true;
     update(0.0f);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    for(HardwareOutputDevice* device : devices)
+        device->flush();
 }
 
 void HardwareController::createNewHardwareMappingState(int channel_number, std::unordered_map<string, string>& settings)

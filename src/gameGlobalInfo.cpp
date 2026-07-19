@@ -376,8 +376,6 @@ void GameGlobalInfo::startScenario(string filename, std::unordered_map<string, s
 
     auto res = main_scenario_script->runFile<void>(filename);
     LuaConsole::checkResult(res);
-    if (res.isOk())
-        scenario_running = true;
     if (res.isOk() && main_scenario_script->isFunction("init"))
     {
         bool is_headless = !PreferencesManager::get("headless").empty();
@@ -392,6 +390,10 @@ void GameGlobalInfo::startScenario(string filename, std::unordered_map<string, s
             else
                 LuaConsole::addLog(error_message);
         }
+        else
+        {
+            scenario_running = true;
+        }
 
         // Announce StdinLuaConsole() on headless mode.
         if (is_headless)
@@ -400,6 +402,10 @@ void GameGlobalInfo::startScenario(string filename, std::unordered_map<string, s
             printf("EE> ");
             fflush(stdout);
         }
+    }
+    else if (res.isOk())
+    {
+        scenario_running = true;
     }
 }
 
