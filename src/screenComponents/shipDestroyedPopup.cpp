@@ -20,36 +20,46 @@ GuiShipDestroyedPopup::GuiShipDestroyedPopup(GuiCanvas* owner)
     (new GuiPanel(ship_destroyed_overlay, "SHIP_DESTROYED_FRAME"))->setPosition(0, 0, sp::Alignment::Center)->setSize(500, 100);
     (new GuiLabel(ship_destroyed_overlay, "SHIP_DESTROYED_TEXT", tr("SHIP DESTROYED!"), 70))->setPosition(0, 0, sp::Alignment::Center)->setSize(500, 100);
     (new GuiButton(ship_destroyed_overlay, "SHIP_DESTROYED_BUTTON", tr("shipdestroyed", "Return"), [this]() {
-        soundManager->stopMusic();
-        returnToShipSelection(this->owner->getRenderLayer());
-        this->owner->destroy();
+        returnFromDestroyedPopup();
     }))->setPosition(0, 75, sp::Alignment::Center)->setSize(500, 50);
 
+    ship_destroyed_overlay->hide();
     show_timeout.start(5.0);
 }
 
-void GuiShipDestroyedPopup::onDraw(sp::RenderTarget& target)
+void GuiShipDestroyedPopup::onUpdate()
 {
     if (my_spaceship)
     {
         ship_destroyed_overlay->hide();
         show_timeout.start(5.0);
         return_timeout = {};
+        popup_visible = false;
     }else{
-        if (show_timeout.isExpired())
+        if (!popup_visible && show_timeout.isExpired())
         {
             ship_destroyed_overlay->show();
+            popup_visible = true;
+        }
+
+        if (popup_visible)
+        {
             if (!PreferencesManager::get("autoconnect").empty())
             {
                 if (!return_timeout.isRunning())
                     return_timeout.start(15.0);
                 if (return_timeout.isExpired())
                 {
-                    soundManager->stopMusic();
-                    returnToShipSelection(this->owner->getRenderLayer());
-                    this->owner->destroy();
+                    returnFromDestroyedPopup();
                 }
             }
         }
     }
+}
+
+void GuiShipDestroyedPopup::returnFromDestroyedPopup()
+{
+    soundManager->stopMusic();
+    returnToShipSelection(owner->getRenderLayer());
+    owner->destroy();
 }
