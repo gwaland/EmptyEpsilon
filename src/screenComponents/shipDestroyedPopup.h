@@ -16,11 +16,15 @@ private:
     GuiCanvas* owner;
     sp::SystemTimer show_timeout;
     sp::SystemTimer return_timeout;
+    bool popup_visible = false;
 
 public:
     GuiShipDestroyedPopup(GuiCanvas* owner);
 
-    virtual void onDraw(sp::RenderTarget& target) override;
+    virtual void onUpdate() override;
+
+private:
+    void returnFromDestroyedPopup();
 };
 
 #endif//SHIP_DESTROYED_POPUP_H
