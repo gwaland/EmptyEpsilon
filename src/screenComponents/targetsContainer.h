@@ -45,12 +45,13 @@ public:
 
     void setToClosestTo(glm::vec2 position, float max_range, ESelectionType selection_type);
 
-    // Select next/previous target by selection type, and optionally also by
-    // friend-or-foe state.
+    // Select the next/previous target in this container by selection type,
+    // and optionally also by friend-or-foe state. Callers are responsible for
+    // publishing the selection when it should become the ship's weapons target.
     void setNext(glm::vec2 position, float max_range, ESelectionType selection_type, KnownFriendOrFoe known_fof = KnownFriendOrFoe::Any);
     void setPrev(glm::vec2 position, float max_range, ESelectionType selection_type, KnownFriendOrFoe known_fof = KnownFriendOrFoe::Any);
-    // Select next/previous target by selection type and a function-defined
-    // filter.
+    // Select the next/previous target in this container by selection type and
+    // a function-defined filter.
     void setNext(glm::vec2 position, float max_range, ESelectionType selection_type, std::function<bool(sp::ecs::Entity)> filter);
     void setPrev(glm::vec2 position, float max_range, ESelectionType selection_type, std::function<bool(sp::ecs::Entity)> filter);
 
