@@ -273,7 +273,7 @@ function boot_transmitter(delta)
         escalation=40
     end
     if charge_timer>40 and escalation==40 then
-        probe[probe_amount]:setWeaponStorage("HVLI",1):setWeaponStorageMax("HVLI",1):setWeaponTubeCount(1):setImpulseMaxSpeed(100)
+        probe[probe_amount]:setWeaponTubeCount(1):setWeaponStorageMax("HVLI",1):setWeaponStorage("HVLI",1):setImpulseMaxSpeed(100)
         escalation=60      
     end
     if charge_timer>60 and escalation==60 then 
