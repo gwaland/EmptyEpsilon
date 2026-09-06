@@ -227,10 +227,10 @@ function missionAmbushed(delta)
         local refilled = false
 
         if player.old_nuke_max ~= nil then
-            player:setWeaponStorage("Nuke", player.old_nuke_max)
-            player:setWeaponStorage("EMP", player.old_emp_max)
             player:setWeaponStorageMax("Nuke", player.old_nuke_max)
             player:setWeaponStorageMax("EMP", player.old_emp_max)
+            player:setWeaponStorage("Nuke", player.old_nuke_max)
+            player:setWeaponStorage("EMP", player.old_emp_max)
             player.old_nuke_max = nil
             refilled = true
         end
