@@ -275,7 +275,6 @@ void TargetsContainer::setNext(glm::vec2 position, const std::vector<sp::ecs::En
         if (found_current)
         {
             set(entity);
-            my_player_info->commandSetTarget(get());
             return;
         }
 
@@ -285,7 +284,6 @@ void TargetsContainer::setNext(glm::vec2 position, const std::vector<sp::ecs::En
 
     // Current target not in list or at end: select the first/closest entity.
     set(first_valid);
-    my_player_info->commandSetTarget(get());
 }
 
 void TargetsContainer::setPrev(glm::vec2 position, const std::vector<sp::ecs::Entity>& entities)
@@ -311,7 +309,6 @@ void TargetsContainer::setPrev(glm::vec2 position, const std::vector<sp::ecs::En
         if (get() == entity)
         {
             set(prev_entity ? prev_entity : last_valid);
-            my_player_info->commandSetTarget(get());
             return;
         }
         prev_entity = entity;
@@ -319,7 +316,6 @@ void TargetsContainer::setPrev(glm::vec2 position, const std::vector<sp::ecs::En
 
     // Current target not in list: select the furthest entity.
     set(last_valid);
-    my_player_info->commandSetTarget(get());
 }
 
 void TargetsContainer::sortByDistance(glm::vec2 position, std::vector<sp::ecs::Entity>& entities)
